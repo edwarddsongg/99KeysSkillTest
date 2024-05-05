@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import ImagePanel from './imagePanel';
+import FloorPlanForm from './floorPlanForm';
 
-function App() {
+const App = () => {
+  const [floorPlanData, setFloorPlanData] = useState({
+    image: null,
+    name: '',
+    interiorSize: '',
+    exteriorSize: '',
+    exteriorType: '',
+    facingDirections: [],
+    floorType: '',
+  });
+
+  const handleImageChange = (image) => {
+    setFloorPlanData({ ...floorPlanData, image });
+  };
+
+  const handleSave = () => {
+    // Crop the image based on safe zone
+    // Submit floor plan data to backend
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div style={{ textAlign: 'left', marginBottom: '20px' }}>
+        <h1>Adjust Floor Plans</h1>
+      </div>
+    <div style={{ display: 'flex' }}>
+      
+      
+      <div style={{ flex: 1, paddingRight: '20px' }}>
+        <ImagePanel 
+          image={floorPlanData.image} 
+          onImageChange={(image) => setFloorPlanData({ ...floorPlanData, image })}
+          onSave={handleSave} 
+        />
+      </div>
+      <div style={{ flex: 1 }}>
+        <FloorPlanForm 
+          data={floorPlanData} 
+          onDataChange={(newData) => setFloorPlanData(newData)} 
+        />
+      </div>
     </div>
+    </>
   );
-}
+};
 
 export default App;
